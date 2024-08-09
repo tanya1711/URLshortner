@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigShyft</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 50px;
+            margin: 0;
+            padding: 6.94rem;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            background: url(
+            "https://media.geeksforgeeks.org/wp-content/uploads/20240313102506/NetlfixHome-min.jpeg")
+            no-repeat center center fixed;
+            -webkit-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            background-size: 100% 100%;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow :hidden;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+        .container label {
+            font-size: 1.1em;
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .container button {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s ease;
+        }
+        .container button:hover {
+            background: #218838;
+        }
+        .success-message {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .top-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 2;
+        }
+/* Retain the existing button styling */
+.top-buttons a {
+    background: #218838;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 36px;
+    margin-left: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    text-decoration: none; /* Removes underline from links */
+    display: inline-block; /* Makes the anchor behave like a button */
+    text-align: center;
+}
+
+.top-buttons a:hover {
+    background: #1e7e34;
+}
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 325px;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            padding: 20px;
+            border-radius: 24px 0 0 24px;
+            z-index: 2;
+        }
+        .drawer.open {
+            transform: translateX(0);
+        }
+        .drawer .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+        }
+        .drawer h2 {
+            margin-top: 0;
+        }
+        .drawer form {
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer label {
+            font-size: 1em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .drawer input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .drawer button {
+            background: #28a745;
+            color: white;
+            padding: 0 20px;
+            height: 50px;
+            border: none;
+            border-radius: 36px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer button:hover {
+            background: #218838;
+        }
+
+        .drawer button:hover {
+            background: #218838;
+        }
+        .drawer label {
+            font-size: 12px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeOut 4s forwards;
+}
+
+.toast.error {
+    background-color: #dc3545;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+
+    </style>
+</head>
+<body>
+<div class="top-buttons">
+    <a href="login.html" class="btn-login">Login</a>
+    <a href="signUp.html" class="btn-signup">Sign Up</a>
+</div>
+
+<!--<div class="container">-->
+<!--    <h1>BIGSHYFT</h1>-->
+<!--    <h2>Shorten a long URL</h2>-->
+<!--    <form th:action="@{/shorten}" method="post">-->
+<!--        <label for="longUrl">Enter your URL:</label>-->
+<!--        <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>-->
+<!--        <button type="submit">Shorten URL</button>-->
+<!--    </form>-->
+<!--    <div class="success-message" th:if="${shortenedUrl != null}" th:text="'Shortened URL: ' + ${shortenedUrl.shortUrl}"></div>-->
+<!--</div>-->
+
+<!-- Login Drawer -->
+<div id="drawer-login" class="drawer">
+    <span class="close" onclick="closeDrawer()">×</span>
+    <h2>Login</h2>
+    <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="Enter your Email Id" required>
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your Password" required>
+        <button type="button" onclick="submitLoginForm()">Login</button>
+    </form>
+</div>
+
+<!-- Sign Up Drawer -->
+<div id="drawer-signup" class="drawer">
+    <span class="close" onclick="closeDrawer()">×</span>
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+        <label for="signup-name">Name</label>
+        <input type="text" id="signup-name" placeholder="Enter your Name" required>
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="Enter your Email Id" required>
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Enter your Password" required>
+        <button type="button" onclick="submitSignupForm()">Sign Up</button>
+    </form>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay" onclick="closeDrawer()"></div>
+
+
+<script>
+    function openDrawer(type) {
+        document.getElementById(`drawer-${type}`).classList.add('open');
+        document.getElementById('overlay').classList.add('visible');
+    }
+
+    function closeDrawer() {
+        const drawers = document.querySelectorAll('.drawer');
+        drawers.forEach(drawer => drawer.classList.remove('open'));
+        document.getElementById('overlay').classList.remove('visible');
+    }
+
+    function submitSignupForm() {
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+
+        fetch('/api/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Signup successful!');
+            closeDrawer();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Signup failed.');
+        });
+    }
+
+    function submitLoginForm() {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+        .then(response => response.json())
+        .then(user => {
+            if (user) {
+                alert('Login successful!');
+                document.getElementById('user-name').innerText = `Welcome, ${user.name}`;
+                document.getElementById('user-name').style.display = 'inline';
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('signup-btn').style.display = 'none';
+                closeDrawer();
+            } else {
+                alert('Invalid email or password.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Login failed.');
+        });
+    }
+
+    // Check session storage to keep the user logged in
+    window.onload = function() {
+        const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
+        if (loggedInUser) {
+            document.getElementById('user-name').innerText = `Welcome, ${loggedInUser.name}`;
+            document.getElementById('user-name').style.display = 'inline';
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('signup-btn').style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
