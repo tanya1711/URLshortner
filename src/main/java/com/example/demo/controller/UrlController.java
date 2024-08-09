@@ -13,7 +13,6 @@ public class UrlController {
 
     @Autowired
     private UrlService urlService;
-
     @PostMapping("/shorten")
     public String shortenUrl(@RequestParam("longUrl") String longUrl, Model model) {
         Url url = urlService.shortenUrl(longUrl);
@@ -30,6 +29,7 @@ public class UrlController {
 
     @GetMapping("/home")
     public String homePage() {
-        return "homePage";
+        return "homePage.html";
     }
 }
+
