@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigShyft</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .container input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+        .container label {
+            font-size: 1.1em;
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .container button {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s ease;
+        }
+        .container button:hover {
+            background: #218838;
+        }
+        .success-message {
+            color: #28a745;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>BIGSHYFT</h1>
+    <h2>Shorten a long URL</h2>
+    <form th:action="@{/shorten}" method="post">
+        <label for="longUrl">Enter your URL:</label>
+        <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
+        <button type="submit">Shorten URL</button>
+    </form>
+    <div class="success-message" th:if="${shortenedUrl != null}" th:text="'Shortened URL: ' + ${shortenedUrl.shortUrl}"></div>
+</div>
+</body>
+</html>

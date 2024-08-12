@@ -4,6 +4,7 @@ import com.example.demo.entityclass.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -17,12 +18,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam String email, @RequestParam String password) {
-        User user = userService.findByEmail(email);
-        if (user == null || !user.getPassword().equals(password)) {
-            // Invalid credentials
-            return null;
+    public User login(@RequestBody User loginUser) {
+        Optional<User> user = userService.login(loginUser.getEmail(), loginUser.getPassword());
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            throw new RuntimeException("Invalid email or password");
         }
-        return user; // Return the user object on successful login
     }
 }
