@@ -11,6 +11,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private int count;
 
     // Constructors
     public User() {
@@ -20,6 +21,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.count = 0;
     }
 
     // Getters and Setters
@@ -53,5 +55,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
