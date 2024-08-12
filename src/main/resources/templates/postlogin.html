@@ -263,29 +263,26 @@ function submitShortenUrlForm(event) {
         },
         body: JSON.stringify({ longUrl: longUrl })
     })
-    .then(response => {
-        if (response.ok) {
-            console.log("Check");
-            console.log(response);
-            return response; // Parse JSON if the response is OK
-        } else {
-            console.log(response.status);
-            console.log("Check");
-            console.log(response);
-            throw new Error('Failed to shorten URL'); // Throw an error if response is not OK
-        }
-    })
-     .then(text => {
-        // Handle the plain text response here
-        const shortenedUrl = document.getElementById('shortened-url').getAttribute('data-url');
-        document.getElementById('shortened-url-message').innerText = 'Response: ' +  shortenedUrl;
-        document.getElementById('shortened-url-message').className = 'success-message';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
-        document.getElementById('shortened-url-message').className = 'message error';
-    });
+   .then(response => {
+    if (response.ok) {
+        // Parse the JSON from the response
+        return response.json();
+    } else {
+        // Handle the error response
+        console.log("Error status:", response.status);
+        return response.text().then(text => { throw new Error(text); });
+    }
+})
+.then(data => {
+    // Print the data received from the API
+    console.log("Response Data:", data);
+    console.log("Short url Data:", data.shortUrl);
+    document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + data.shortUrl;
+})
+.catch(error => {
+    // Print the error if any occurred during the fetch or parsing
+    console.error("Error:", error);
+});
 }
 
 
