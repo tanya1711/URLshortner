@@ -231,7 +231,8 @@
     <div class="success-message" id="shortened-url-message"></div>
 </div>
 
-<div id="shortened-url" data-url="${shortenedUrl}"></div>
+<input type="hidden" id="shortened-url" th:value="${shortenedUrl}"/>
+
 
 
 <script>
@@ -276,9 +277,10 @@ function submitShortenUrlForm(event) {
         }
     })
      .then(text => {
-        // Handle the plain text response here
-        const shortenedUrl = document.getElementById('shortened-url').getAttribute('data-url');
-        document.getElementById('shortened-url-message').innerText = 'Response: ' +  shortenedUrl;
+
+        const shortenedUrl = document.getElementById('shortened-url').value;
+        console.log(shortenedUrl)
+        document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + shortenedUrl;
         document.getElementById('shortened-url-message').className = 'success-message';
     })
     .catch(error => {

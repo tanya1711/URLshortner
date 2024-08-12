@@ -18,8 +18,9 @@ public class UrlController {
     @PostMapping("/shorten")
     public String shortenUrl(@RequestBody URLInputDTO urlDTO, Model model) {
         Url url = urlService.shortenUrl(urlDTO.getLongUrl());
+        System.out.println(url.getShortUrl());
         System.out.println("entered controller");
-        model.addAttribute("shortenedUrl", url);
+        model.addAttribute("shortenedUrl", url.getShortUrl());
         return "postlogin";
     }
 
