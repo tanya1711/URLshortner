@@ -16,11 +16,11 @@ public class UrlController {
     private UrlService urlService;
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestBody URLInputDTO urlDTO, Model model) {
+    @ResponseBody
+    public Url shortenUrl(@RequestBody URLInputDTO urlDTO) {
         Url url = urlService.shortenUrl(urlDTO.getLongUrl());
         System.out.println("entered controller");
-        model.addAttribute("shortenedUrl", url);
-        return "postlogin";
+        return url;
     }
 
     @GetMapping("/{shortUrl}")
