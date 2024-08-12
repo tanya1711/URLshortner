@@ -51,6 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println(request.getMethod());
                 String authHeader = request.getHeader("Authorization");
                 System.out.println("header " + authHeader);
+
                 byte[] decodedBytes = Base64.getDecoder().decode(authHeader.split("Basic ")[1]);
                 String decodedString = new String(decodedBytes, StandardCharsets.UTF_8);
 
