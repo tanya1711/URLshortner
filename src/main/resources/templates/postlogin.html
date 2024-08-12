@@ -231,7 +231,11 @@
     <div class="success-message" id="shortened-url-message"></div>
 </div>
 
-<div id="shortened-url" data-url="${shortenedUrl}"></div>
+<div>
+    Shortened URL: <span th:text="${shortenedUrl}"></span>
+</div>
+
+
 
 
 <script>
@@ -283,6 +287,7 @@ function submitShortenUrlForm(event) {
     // Print the error if any occurred during the fetch or parsing
     console.error("Error:", error);
 });
+
 }
 
 
