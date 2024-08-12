@@ -6,13 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("/signup")
+    @RequestMapping(method = RequestMethod.POST, value="/signup")
     public User signup(@RequestBody User user) {
         return userService.saveUser(user);
     }
