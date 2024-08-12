@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             System.out.println(request.getMethod());
             if (request.getRequestURI().equals("/shorten")) {
                 String authHeader = request.getHeader("Authorization");
-                System.out.println(authHeader);
+                System.out.println("header "+authHeader);
                 byte[] decodedBytes = Base64.getDecoder().decode(authHeader.split("Basic ")[1]);
                 String decodedString = new String(decodedBytes, StandardCharsets.UTF_8);
 
@@ -60,9 +60,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 if (userService.getCountByUsername(username) < 4) {
                     userService.incrementCount(username);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                    response.getWriter().write("Request successful.");
+
                 }
                 else {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.getWriter().write("OOPs, you reached your free trial limit!");
                     System.out.println("OOPs you reached your free trial limit!");
+
                 }
 //                    String token = "Bearer " + jwtTokenService.generateToken(username, password);
 //                    response.addHeader("Authorization", token);
