@@ -20,7 +20,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 @Component
 @NonNullApi
@@ -39,50 +42,44 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            System.out.println("ENTERED FILTER!!!");
-            System.out.println(request.getRequestURI());
-            System.out.println(request.getMethod());
-            if (request.getRequestURI().equals("/shorten")) {
+            List<String> permittedURIs = new ArrayList<>();
+            permittedURIs.addAll(Arrays.asList("/signup", "/error", "/login", "/home", "/login.html", "/signUp.html","/favicon.ico","/postlogin.html"));
+
+            if(!permittedURIs.contains(request.getRequestURI())) {
+                System.out.println("ENTERED FILTER!!!");
+                System.out.println(request.getRequestURI());
+                System.out.println(request.getMethod());
                 String authHeader = request.getHeader("Authorization");
-                System.out.println(authHeader);
+                System.out.println("header " + authHeader);
                 byte[] decodedBytes = Base64.getDecoder().decode(authHeader.split("Basic ")[1]);
                 String decodedString = new String(decodedBytes, StandardCharsets.UTF_8);
 
-                // Split the decoded string into username and password
                 String[] credentials = decodedString.split(":", 2);
                 String username = credentials[0];
                 String password = credentials[1];
 
-                // Output the results
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + password);
                 Authentication authentication = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                if (userService.getCountByUsername(username) < 4) {
-                    userService.incrementCount(username);
+                System.out.println(authentication);
+                if (request.getRequestURI().equals("/shorten")) {
+
+                    if (userService.getCountByUsername(username) < 10) {
+                        userService.incrementCount(username);
+//                        response.setStatus(HttpServletResponse.SC_OK);
+                        System.out.println(response.getStatus()+" set through filter" );
+
+//                        response.getWriter().write("Request successful.");
+//                        return;
+
+                    } else {
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                        response.getWriter().write("OOPs, you reached your free trial limit!");
+                        System.out.println("OOPs you reached your free trial limit!");
+                        return;
+                    }
                 }
-                else {
-                    System.out.println("OOPs you reached your free trial limit!");
-                }
-//                    String token = "Bearer " + jwtTokenService.generateToken(username, password);
-//                    response.addHeader("Authorization", token);
-//                    System.out.println("context");
-//                    System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
-//            }
-//            else {
-//                String token = request.getHeader("Authorization");
-//                if(jwtTokenService.isValidate(token)){
-//                    System.out.println("hey token is valid");
-//                    Claims claims = jwtTokenService.extractUserNamePasswordFromJwtToken(token);
-//                    Authentication authentication = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(claims.get("username"), claims.get("password")));
-//                    System.out.println("auth obj "+authentication.getPrincipal().toString());
-//                    SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//                }
-//                else {
-//                    System.out.println("sorry invalid token");
-//
-//                }
             }
 
         } catch (BadCredentialsException e) {

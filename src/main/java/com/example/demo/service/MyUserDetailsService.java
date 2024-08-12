@@ -8,29 +8,34 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-   @Autowired
-   private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("hellooo "+userRepository.findByEmail(username).getPassword());
+        // Find user by email
+        Optional<User> optionalUser = userRepository.findByEmail(username);
 
-        User user =  userRepository.findByEmail(username);
+        // If user is not present, throw an exception
+        User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
 
-        UserDetails userDetails= org.springframework.security.core.userdetails.User
+        // Log the user's password for debugging (optional)
+        System.out.println("User found: " + user.getEmail() + " with password: " + user.getPassword());
+
+        // Create UserDetails object
+        UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .build();
 
-        System.out.println(userDetails.getUsername()+" "+userDetails.getPassword()+" "+userDetails.getAuthorities());
+        // Log the UserDetails object for debugging (optional)
+        System.out.println("UserDetails created: " + userDetails.getUsername() + " " + userDetails.getPassword() + " " + userDetails.getAuthorities());
 
         return userDetails;
     }
-
-
 }
-
-

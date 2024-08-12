@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -222,107 +223,72 @@
 <div class="container">
     <h1>BIGSHYFT</h1>
     <h2>Shorten a long URL</h2>
-    <form th:action="@{/shorten}" method="post">
+    <form id="shorten-url-form">
         <label for="longUrl">Enter your URL:</label>
         <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
-        <button type="submit">Shorten URL</button>
+        <button type="submit" onclick="submitShortenUrlForm(event)">Shorten URL</button>
     </form>
-    <div class="success-message" th:if="${shortenedUrl != null}" th:text="'Shortened URL: ' + ${shortenedUrl.shortUrl}"></div>
+    <div class="success-message" id="shortened-url-message"></div>
 </div>
 
-<!--&lt;!&ndash; Login Drawer &ndash;&gt;-->
-<!--<div id="drawer-login" class="drawer">-->
-<!--    <span class="close" onclick="closeDrawer()">×</span>-->
-<!--    <h2>Login</h2>-->
-<!--    <form id="login-form">-->
-<!--        <label for="login-email">Email</label>-->
-<!--        <input type="email" id="login-email" placeholder="Enter your Email Id" required>-->
-<!--        <label for="login-password">Password</label>-->
-<!--        <input type="password" id="login-password" placeholder="Enter your Password" required>-->
-<!--        <button type="button" onclick="submitLoginForm()">Login</button>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Sign Up Drawer &ndash;&gt;-->
-<!--<div id="drawer-signup" class="drawer">-->
-<!--    <span class="close" onclick="closeDrawer()">×</span>-->
-<!--    <h2>Sign Up</h2>-->
-<!--    <form id="signup-form">-->
-<!--        <label for="signup-name">Name</label>-->
-<!--        <input type="text" id="signup-name" placeholder="Enter your Name" required>-->
-<!--        <label for="signup-email">Email</label>-->
-<!--        <input type="email" id="signup-email" placeholder="Enter your Email Id" required>-->
-<!--        <label for="signup-password">Password</label>-->
-<!--        <input type="password" id="signup-password" placeholder="Enter your Password" required>-->
-<!--        <button type="button" onclick="submitSignupForm()">Sign Up</button>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!-- Overlay -->
-<div id="overlay" class="overlay" onclick="closeDrawer()"></div>
+<div id="shortened-url" data-url="${shortenedUrl}"></div>
 
 
 <script>
+function submitShortenUrlForm(event) {
 
-    function submitSignupForm() {
-        const name = document.getElementById('signup-name').value;
-        const email = document.getElementById('signup-email').value;
-        const password = document.getElementById('signup-password').value;
+    event.preventDefault(); // Prevent the default form submission
 
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert('Signup successful!');
-            closeDrawer();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Signup failed.');
-        });
+    const longUrl = document.getElementById('longUrl').value;
+
+    // Retrieve email and password from localStorage
+    const email = localStorage.getItem('email');
+    const password = localStorage.getItem('password');
+
+    if (!email || !password) {
+        document.getElementById('shortened-url-message').innerText = 'Email and/or password not found in localStorage.';
+        document.getElementById('shortened-url-message').className = 'message error';
+        return;
     }
 
-    function submitLoginForm() {
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+    // Encode the credentials for Authorization header
+    const credentials = btoa(`${email}:${password}`);
+    console.log('Encoded credentials for Authorization header:', credentials);
 
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        })
-        .then(response => response.json())
-        .then(user => {
-            if (user) {
-                alert('Login successful!');
-                document.getElementById('user-name').innerText = `Welcome, ${user.name}`;
-                document.getElementById('user-name').style.display = 'inline';
-                document.getElementById('login-btn').style.display = 'none';
-                document.getElementById('signup-btn').style.display = 'none';
-                closeDrawer();
-            } else {
-                alert('Invalid email or password.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Login failed.');
-        });
-    }
+    fetch('/shorten', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${credentials}`
+        },
+        body: JSON.stringify({ longUrl: longUrl })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log("Check");
+            console.log(response);
+            return response; // Parse JSON if the response is OK
+        } else {
+            console.log(response.status);
+            console.log("Check");
+            console.log(response);
+            throw new Error('Failed to shorten URL'); // Throw an error if response is not OK
+        }
+    })
+     .then(text => {
+        // Handle the plain text response here
+        const shortenedUrl = document.getElementById('shortened-url').getAttribute('data-url');
+        document.getElementById('shortened-url-message').innerText = 'Response: ' +  shortenedUrl;
+        document.getElementById('shortened-url-message').className = 'success-message';
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
+        document.getElementById('shortened-url-message').className = 'message error';
+    });
+}
+
+
 
     // Check session storage to keep the user logged in
     window.onload = function() {

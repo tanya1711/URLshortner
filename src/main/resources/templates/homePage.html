@@ -505,14 +505,23 @@
         <form class="login-card">
             <h1>BigShyft URL Shortner</h1>
             <div>
-                <button type="button" class="btn-login" onclick="window.location.href='login.html'">Login</button>
-                <button type="button" class="btn-login" onclick="window.location.href='signup.html'">Sign Up</button>
+                <button type="button" class="btn-login" id="loginBtn">Login</button>
+                <button type="button" class="btn-login" id="signUpBtn">Sign Up</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
+     // Redirect to login page on button click
+    document.getElementById('loginBtn').onclick = function () {
+        window.location.href = 'login.html';
+    };
+
+    // Redirect to sign-up page on button click
+    document.getElementById('signUpBtn').onclick = function () {
+        window.location.href = 'signUp.html';
+    };
 </script>
 </body>
 </html>

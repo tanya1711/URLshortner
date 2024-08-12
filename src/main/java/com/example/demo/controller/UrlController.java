@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.URLInputDTO;
 import com.example.demo.entityclass.Url;
 import com.example.demo.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,11 @@ public class UrlController {
     private UrlService urlService;
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestParam("longUrl") String longUrl, Model model) {
-        Url url = urlService.shortenUrl(longUrl);
+    public String shortenUrl(@RequestBody URLInputDTO urlDTO, Model model) {
+        Url url = urlService.shortenUrl(urlDTO.getLongUrl());
+        System.out.println("entered controller");
         model.addAttribute("shortenedUrl", url);
-        return "homePage";
+        return "postlogin";
     }
 
     @GetMapping("/{shortUrl}")
@@ -31,5 +33,11 @@ public class UrlController {
     @GetMapping("/home")
     public String homePage() {
         return "homePage";
+    }
+
+    @GetMapping("/getPostLogin")
+    public String getLogin() {
+        System.out.println("giving response");
+        return "postlogin";
     }
 }

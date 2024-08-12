@@ -15,7 +15,6 @@ public class UrlService {
 
     public Url shortenUrl(String originalUrl) {
         String shortUrl = UUID.randomUUID().toString().substring(0, 6);
-        //shortUrl = "recruiterdev.bigshyft.com/" + shortUrl;
         Url url = new Url();
         url.setOriginalUrl(originalUrl);
         url.setShortUrl(shortUrl);
