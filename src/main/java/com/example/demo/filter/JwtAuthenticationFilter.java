@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     if (userService.getCountByUsername(username) < 10) {
                         userService.incrementCount(username);
 //                        response.setStatus(HttpServletResponse.SC_OK);
-                        System.out.println(response.getStatus()+" set through filter" );
+//                        System.out.println(response.getStatus()+" set through filter" );
 
 //                        response.getWriter().write("Request successful.");
 //                        return;

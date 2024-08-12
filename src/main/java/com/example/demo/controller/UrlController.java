@@ -15,6 +15,7 @@ public class UrlController {
     @Autowired
     private UrlService urlService;
 
+
     @PostMapping("/shorten")
     public String shortenUrl(@RequestBody URLInputDTO urlDTO, Model model) {
         Url url = urlService.shortenUrl(urlDTO.getLongUrl());
