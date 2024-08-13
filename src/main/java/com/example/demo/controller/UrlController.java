@@ -23,8 +23,9 @@ public class UrlController {
         return url;
     }
 
-    @GetMapping("/{shortUrl}")
+    @GetMapping("/api/{shortUrl}")
     public RedirectView redirectUrl(@PathVariable String shortUrl) {
+        System.out.println("entered short url");
         return urlService.getOriginalUrl(shortUrl)
                 .map(url -> new RedirectView(url.getOriginalUrl()))
                 .orElse(null);
