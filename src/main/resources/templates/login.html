@@ -5,260 +5,186 @@
 </head>
 <style>
     body {
-            margin: 0;
-            padding: 0;
-            background: url(
-            "https://media.geeksforgeeks.org/wp-content/uploads/20240313102506/NetlfixHome-min.jpeg")
-            no-repeat center center fixed;
-            -webkit-background-size: 100% 100%;
-            -moz-background-size: 100% 100%;
-            -o-background-size: 100% 100%;
-            background-size: 100% 100%;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            overflow :hidden;
-            }
+        margin: 0;
+        padding: 0;
+        background-color: black; /* Black background */
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        overflow: hidden;
+    }
 
     .img-netflixIcon {
-    height: 120px;
-    margin-left: 40px;
-}
+        height: 120px;
+        margin-left: 40px;
+    }
 
     .topSide {
         background-color: rgba(0, 0, 0, 0.6);
         padding-bottom: 100px;
-        }
-
-    .parent-login{
-        padding : 50px;
-        }
-
-.footer {
-    background-color: rgba(0, 0, 0, 0.85);
-    color: #757575;
-    position: relative;
-    z-index: 1;
-}
-
-.footWidth {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 30px;
-}
-
-.footLay {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 15px 0 0 0;
-    margin-block-start: 0;
-    margin-block-end: 0;
-}
-
-.footLay li {
-    list-style: none;
-}
-
-.footList {
-    width: 25%;
-    margin-top: 10px;
-}
-
-.footLink {
-    text-decoration: none;
-    color: #757575;
-    font-size: 0.8rem;
-}
-
-.footLink:hover {
-    text-decoration: underline;
-
-}
-
-.login-card {
-    margin: 0 auto;
-    width: 320px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    padding: 30px 70px 43px 70px;
-}
-
-.login-card h1 {
-    color: white;
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.userInput {
-    margin-bottom: 20px;
-}
-
-.userInput input {
-    width: 100%;
-    height: 45px;
-    background-color: transparent;
-    color: white;
-    border-radius: 5px;
-    border-color: white;
-    outline: transparent;
-    text-indent: 18px;
-}
-
-.userInput input::-webkit-input-placeholder {
-    font-size: 1rem;
-    color: #999;
-}
-
-.userInput input::-moz-placeholder {
-    font-size: 1rem;
-    color: #999;
-    text-indent: 40px;
-}
-
-.btn-login {
-    margin-top: 20px;
-    width: 100%;
-    padding: 13px;
-    border-radius: 5px;
-    background-color: red;
-    color: white;
-    border: none;
-    font-size: 1.05rem;
-    cursor: pointer;
-}
-
-.signUp{
-    margin-top: 20px;
-    padding-left: 45px;
-    }
-
-.remMe {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    font-size: 0.9rem;
-}
-
-.cText {
-    color: #b3b3b3;
-}
-
-.cLink {
-    color: #737373;
-}
-
-.sLink {
-    color: white;
-    text-decoration: none;
-}
-
-.sLink:hover {
-    text-decoration: underline;
-}
-
-.fb {
-    color: #3b5998;
-    margin-right: 6px;
-    font-size: 20px;
-}
-
-.fb {
-    text-decoration: none;
-    margin-left: 10px;
-    font-size: 0.8rem;
-}
-
-.login2 {
-    margin: 50px 0 15px 0;
-    vertical-align: middle;
-    color: #8c8c8c;
-}
-
-.signUp {
-    margin-bottom: 10px;
-    color: #8c8c8c;
-}
-
-.google {
-    font-size: 0.8rem;
-    color: #8c8c8c;
-}
-
-.google a {
-    text-decoration: none;
-}
-
-.google a:hover {
-    text-decoration: underline;
-}
-
-.tel-link {
-    text-decoration: none;
-    color: #757575;
-}
-
-.tel-link:hover {
-    text-decoration: underline;
-}
-
-.message {
-    margin-top: 10px;
-    font-size: 1rem;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.message.success {
-    color: #28a745; /* Green color for success */
- /* Light green background */
-}
-
-.message.error {
-    color: #dc3545; /* Red color for error */
- /* Light red background */
-}
-
-
-
-
-
-@media screen and (max-width: 740px) {
-    body {
-        background: black;
-    }
-
-    .img-netflixIcon {
-        margin-left: 22px;
-    }
-
-    .login-card {
-        padding: 0 10px 0 10px;
-        width: 100%;
     }
 
     .parent-login {
-        width: 90%;
-        margin: 0 auto;
+        padding: 50px;
     }
 
     .footer {
-        border-top: 1px solid #737373;
+        background-color: rgba(0, 0, 0, 0.85);
+        color: #757575;
+        position: relative;
+        z-index: 1;
     }
 
-    .topSide {
-        padding-bottom: 93px;
+    .footWidth {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .footLay {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 15px 0 0 0;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
+    .footLay li {
+        list-style: none;
     }
 
     .footList {
-        width: 33%;
+        width: 25%;
+        margin-top: 10px;
     }
-}
 
-@media screen and (max-width: 500px) {
-    .footList {
-        width: 50%;
+    .footLink {
+        text-decoration: none;
+        color: #757575;
+        font-size: 0.8rem;
     }
-}
 
+    .footLink:hover {
+        text-decoration: underline;
+    }
+
+    .login-card {
+        margin: 0 auto;
+        width: 320px;
+        background-color: white; /* White background for login box */
+        border-radius: 5px;
+        padding: 30px 70px 43px 70px;
+    }
+
+    .login-card h1 {
+        color: black; /* Black text for login heading */
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .userInput {
+        margin-bottom: 20px;
+    }
+
+    .userInput input {
+        width: 100%;
+        height: 45px;
+        background-color: transparent;
+        color: black; /* Black text for input fields */
+        border-radius: 5px;
+        border: 1px solid black; /* Black border for input fields */
+        outline: transparent;
+        text-indent: 18px;
+    }
+
+    .userInput input::-webkit-input-placeholder {
+        font-size: 1rem;
+        color: #999;
+    }
+
+    .userInput input::-moz-placeholder {
+        font-size: 1rem;
+        color: #999;
+        text-indent: 40px;
+    }
+
+    .btn-login {
+        margin-top: 20px;
+        width: 100%;
+        padding: 13px;
+        border-radius: 5px;
+        background-color: blue; /* Blue background for login button */
+        color: white;
+        border: none;
+        font-size: 1.05rem;
+        cursor: pointer;
+    }
+
+    .signUp {
+        margin-top: 20px;
+        padding-left: 45px;
+    }
+
+    .sLink {
+        color: blue; /* Blue color for signup link */
+        text-decoration: none;
+    }
+
+    .sLink:hover {
+        text-decoration: underline;
+    }
+
+    .message {
+        margin-top: 10px;
+        font-size: 1rem;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .message.success {
+        color: #28a745; /* Green color for success */
+    }
+
+    .message.error {
+        color: #dc3545; /* Red color for error */
+    }
+
+    @media screen and (max-width: 740px) {
+        body {
+            background: black;
+        }
+
+        .img-netflixIcon {
+            margin-left: 22px;
+        }
+
+        .login-card {
+            padding: 0 10px 0 10px;
+            width: 100%;
+        }
+
+        .parent-login {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .footer {
+            border-top: 1px solid #737373;
+        }
+
+        .topSide {
+            padding-bottom: 93px;
+        }
+
+        .footList {
+            width: 33%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .footList {
+            width: 50%;
+        }
+    }
 </style>
 
 <body>
@@ -289,82 +215,81 @@
 </div>
 
 <script>
-function submitLoginForm(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+    function submitLoginForm(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
 
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
 
-    console.log('Attempting to log in with email:', email);
-    console.log('Password:', password);
+        console.log('Attempting to log in with email:', email);
+        console.log('Password:', password);
 
-    if (!email || !password) {
-        document.getElementById('login-message').innerText = 'Please enter both email and password.';
-        document.getElementById('login-message').className = 'message error';
-        return;
-    }
-
-    // Store email and password in local storage
-    localStorage.setItem('email', email);
-    localStorage.setItem('password', password);
-
-    // Encode the credentials for Authorization header
-    const credentials = btoa(`${email}:${password}`);
-    console.log('Encoded credentials for Authorization header:', credentials);
-
-    fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${credentials}`
-        },
-        body: JSON.stringify({ email: email, password: password })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(error => {
-                throw new Error(error.message || 'Invalid email or password');
-            });
+        if (!email || !password) {
+            document.getElementById('login-message').innerText = 'Please enter both email and password.';
+            document.getElementById('login-message').className = 'message error';
+            return;
         }
-        return response.json();
-    })
-    .then(user => {
-        document.getElementById('login-message').innerText = 'Login successful';
-        document.getElementById('login-message').className = 'message success';
 
-        // Store user data in session storage
-        sessionStorage.setItem('user', JSON.stringify(user));
+        // Store email and password in local storage
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
 
-        setTimeout(() => {
-            // Fetch the /getPostLogin endpoint with headers
-            fetch('/getPostLogin', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Basic ${credentials}`
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(error => {
-                        throw new Error(error.message || 'Error loading postlogin page');
-                    });
-                }
-                // Redirect to the new page
-                window.location.href = '/postlogin.html';
-            })
-            .catch(error => {
-                document.getElementById('login-message').innerText = error.message;
-                document.getElementById('login-message').className = 'message error';
-            });
-        }, 2000); // Redirect after 2 seconds
-    })
-    .catch(error => {
-        document.getElementById('login-message').innerText = error.message;
-        document.getElementById('login-message').className = 'message error';
-    });
-}
+        // Encode the credentials for Authorization header
+        const credentials = btoa(`${email}:${password}`);
+        console.log('Encoded credentials for Authorization header:', credentials);
 
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${credentials}`
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(error => {
+                    throw new Error(error.message || 'Invalid email or password');
+                });
+            }
+            return response.json();
+        })
+        .then(user => {
+            document.getElementById('login-message').innerText = 'Login successful';
+            document.getElementById('login-message').className = 'message success';
+
+            // Store user data in session storage
+            sessionStorage.setItem('user', JSON.stringify(user));
+
+            setTimeout(() => {
+                // Fetch the /getPostLogin endpoint with headers
+                fetch('/getPostLogin', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Basic ${credentials}`
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(error => {
+                            throw new Error(error.message || 'Error loading postlogin page');
+                        });
+                    }
+                    // Redirect to the new page
+                    window.location.href = '/postlogin.html';
+                })
+                .catch(error => {
+                    document.getElementById('login-message').innerText = error.message;
+                    document.getElementById('login-message').className = 'message error';
+                });
+            }, 2000); // Redirect after 2 seconds
+        })
+        .catch(error => {
+            document.getElementById('login-message').innerText = error.message;
+            document.getElementById('login-message').className = 'message error';
+        });
+    }
 </script>
 </body>
 </html>

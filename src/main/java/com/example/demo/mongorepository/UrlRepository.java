@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface UrlRepository extends MongoRepository<Url, String> {
     Optional<Url> findByShortUrl(String shortUrl);
+    boolean existsByShortUrl(String shortUrl);
 }
 

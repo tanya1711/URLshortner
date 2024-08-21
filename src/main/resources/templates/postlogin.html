@@ -9,25 +9,23 @@
         body {
             font-family: Arial, sans-serif;
             color: white;
-            padding: 50px;
             margin: 0;
-            padding: 6.94rem;
-            align-items: center;
             height: 100vh;
             overflow: hidden;
             position: relative;
-            padding-left: 25%
-
+            background-color: black; /* Set background to black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-.container {
-    max-width: 600px;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    color: black;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
+        .container {
+            max-width: 800px; /* Increased max-width */
+            background: white;
+            padding: 40px; /* Increased padding */
+            border-radius: 10px;
+            color: black;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
         .container h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
@@ -75,26 +73,23 @@
             right: 20px;
             z-index: 2;
         }
-/* Retain the existing button styling */
-.top-buttons a {
-    background: #218838;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 36px;
-    margin-left: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    text-decoration: none; /* Removes underline from links */
-    display: inline-block; /* Makes the anchor behave like a button */
-    text-align: center;
-}
-
-.top-buttons a:hover {
-    background: #1e7e34;
-}
-
+        .top-buttons a {
+            background: #218838;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 36px;
+            margin-left: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        .top-buttons a:hover {
+            background: #1e7e34;
+        }
         .overlay {
             position: fixed;
             top: 0;
@@ -168,56 +163,41 @@
             align-items: center;
             justify-content: center;
         }
-
         .drawer button:hover {
             background: #218838;
-        }
-
-        .drawer button:hover {
-            background: #218838;
-        }
-        .drawer label {
-            font-size: 12px;
-            margin-bottom: 5px;
-            color: #333;
         }
         .toast-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.toast {
-    background-color: #28a745;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 5px;
-    font-size: 1em;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    animation: fadeOut 4s forwards;
-}
-
-.toast.error {
-    background-color: #dc3545;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-}
-
-
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toast {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeOut 4s forwards;
+        }
+        .toast.error {
+            background-color: #dc3545;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 <!--<div class="top-buttons">-->
-<!--    <a href="login.html" class="btn-login">Login</a>-->
-<!--    <a href="signUp.html" class="btn-signup">Sign Up</a>-->
+<!--<a href="login.html" class="btn-login">Login</a>-->
+<!--<a href="signUp.html" class="btn-signup">Sign Up</a>-->
 <!--</div>-->
 
 <div class="container">
@@ -231,69 +211,51 @@
     <div class="success-message" id="shortened-url-message"></div>
 </div>
 
-<div>
-    Shortened URL: <span th:text="${shortenedUrl}"></span>
-</div>
-
-
-
-
 <script>
-function submitShortenUrlForm(event) {
+    function submitShortenUrlForm(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-    event.preventDefault(); // Prevent the default form submission
+        const longUrl = document.getElementById('longUrl').value;
 
-    const longUrl = document.getElementById('longUrl').value;
+        // Retrieve email and password from localStorage
+        const email = localStorage.getItem('email');
+        const password = localStorage.getItem('password');
 
-    // Retrieve email and password from localStorage
-    const email = localStorage.getItem('email');
-    const password = localStorage.getItem('password');
-
-    if (!email || !password) {
-        document.getElementById('shortened-url-message').innerText = 'Email and/or password not found in localStorage.';
-        document.getElementById('shortened-url-message').className = 'message error';
-        return;
-    }
-
-    // Encode the credentials for Authorization header
-    const credentials = btoa(`${email}:${password}`);
-    console.log('Encoded credentials for Authorization header:', credentials);
-
-    fetch('/shorten', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Basic ${credentials}`
-        },
-        body: JSON.stringify({ longUrl: longUrl })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log("Check");
-            console.log(response);
-            return response; // Parse JSON if the response is OK
-        } else {
-            console.log(response.status);
-            console.log("Check");
-            console.log(response);
-            throw new Error('Failed to shorten URL'); // Throw an error if response is not OK
+        if (!email || !password) {
+            document.getElementById('shortened-url-message').innerText = 'Email and/or password not found in localStorage.';
+            document.getElementById('shortened-url-message').className = 'message error';
+            return;
         }
-    })
-     .then(text => {
 
-        const shortenedUrl = document.getElementById('shortened-url').value;
-        console.log(shortenedUrl)
-        document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + shortenedUrl;
-        document.getElementById('shortened-url-message').className = 'success-message';
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
-        document.getElementById('shortened-url-message').className = 'message error';
-    });
-}
+        // Encode the credentials for Authorization header
+        const credentials = btoa(`${email}:${password}`);
+        console.log('Encoded credentials for Authorization header:', credentials);
 
-
+        fetch('/shorten', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${credentials}`
+            },
+            body: JSON.stringify({ longUrl: longUrl })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to shorten URL');
+            }
+            return response.json(); // Return the JSON from the response
+        })
+        .then(data => {
+            const shortenedUrl = data.shortenedUrl; // Access the shortened URL from the JSON
+            document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + shortenedUrl;
+            document.getElementById('shortened-url-message').className = 'success-message';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
+            document.getElementById('shortened-url-message').className = 'message error';
+        });
+    }
 
     // Check session storage to keep the user logged in
     window.onload = function() {

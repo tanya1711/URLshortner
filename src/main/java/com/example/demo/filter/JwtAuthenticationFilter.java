@@ -44,8 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             List<String> permittedURIs = new ArrayList<>();
             permittedURIs.addAll(Arrays.asList("/signup", "/error", "/login", "/home", "/login.html", "/signUp.html","/favicon.ico","/postlogin.html"));
-
-            if(!permittedURIs.contains(request.getRequestURI())) {
+            if(!permittedURIs.contains(request.getRequestURI()) && !request.getRequestURI().contains("hello") ) {
                 System.out.println("ENTERED FILTER!!!");
                 System.out.println(request.getRequestURI());
                 System.out.println(request.getMethod());
