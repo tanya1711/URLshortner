@@ -4,6 +4,7 @@ import com.example.demo.dto.URLInputDTO;
 import com.example.demo.entityclass.Url;
 import com.example.demo.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,18 @@ public class UrlController {
 
     @PostMapping("/shorten")
     public ResponseEntity<Map<String, String>> shortenUrl(@RequestBody URLInputDTO urlDTO) {
-        Url url = urlService.shortenUrl(urlDTO.getLongUrl());
-        System.out.println(url.getShortUrl());
-        System.out.println("entered controller");
-
-        // Create a map to store the shortened URL and return it as JSON
+        Url url;
         Map<String, String> response = new HashMap<>();
+        if (urlDTO.customUrl == null) {
+            url = urlService.shortenUrl(urlDTO.getLongUrl());
+        } else {
+            url = urlService.shortenCustomUrl(urlDTO.getLongUrl(), urlDTO.getCustomUrl());
+        }
+        if (url == null) {
+            response.put("error", "Failed to shorten URL. Please try again with a different custom URL or long URL.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
         response.put("shortenedUrl", url.getShortUrl());
-
         return ResponseEntity.ok(response);
     }
 
@@ -47,7 +52,6 @@ public class UrlController {
 
     @GetMapping("/getPostLogin")
     public String getLogin() {
-        System.out.println("giving response");
         return "postlogin";
     }
 }

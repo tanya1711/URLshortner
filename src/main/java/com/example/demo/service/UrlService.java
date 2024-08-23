@@ -25,11 +25,13 @@ public class UrlService {
     }
 
     public Url shortenCustomUrl(String originalUrl, String customUrl) {
-         if(urlRepository.existsByShortUrl(customUrl));
-        Url url = new Url();
-        url.setOriginalUrl(originalUrl);
-        url.setShortUrl(customUrl);
-        return urlRepository.save(url);
+         if(!urlRepository.existsByShortUrl(customUrl)) {
+             Url url = new Url();
+             url.setOriginalUrl(originalUrl);
+             url.setShortUrl(customUrl);
+             return urlRepository.save(url);
+         }
+         return null;
     }
 
     private String generateShortUrl() {
