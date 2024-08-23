@@ -191,17 +191,17 @@
 <div class="topSide">
     <div class="netflixIcon">
         <a href="#">
-            <img src="" class="img-netflixIcon" />
+            <img src="" class="img-netflixIcon"/>
         </a>
     </div>
     <div class="parent-login">
         <form class="login-card">
             <h1>Login</h1>
             <div class="userInput">
-                <input type="text" id="login-email" name="email" placeholder="Email" />
+                <input type="text" id="login-email" name="email" placeholder="Email"/>
             </div>
             <div class="userInput">
-                <input type="password" id="login-password" name="password" placeholder="Password" />
+                <input type="password" id="login-password" name="password" placeholder="Password"/>
             </div>
             <div>
                 <button type="button" class="btn-login" onclick="submitLoginForm(event)">Login</button>
@@ -258,9 +258,14 @@
             document.getElementById('login-message').innerText = 'Login successful';
             document.getElementById('login-message').className = 'message success';
 
+// Log the user object to verify its contents
+    console.log('User object:', user);
+
             // Store user data in session storage
             sessionStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('ispaid', user.isPaid);
 
+console.log('ispaid value stored in sessionStorage:', sessionStorage.getItem('ispaid'));
             setTimeout(() => {
                 // Fetch the /getPostLogin endpoint with headers
                 fetch('/getPostLogin', {

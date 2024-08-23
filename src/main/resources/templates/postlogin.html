@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BigShyft</title>
+    <title>Post Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            color: white;
+            color: black;
             margin: 0;
             height: 100vh;
             overflow: hidden;
             position: relative;
-            background-color: black; /* Set background to black */
             justify-content: center;
             align-items: center;
             display: flex;
+            background-color: #000;
         }
         .container {
-            width: 600px; /* Increased max-width */
+            width: 600px;
             background: white;
-            padding: 30px; /* Increased padding */
+            padding: 30px;
             border-radius: 10px;
             color: black;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -43,30 +42,24 @@
             font-size: 1em;
         }
         .container input[type="text2"] {
-            width: calc(100% - 22px);
+            width: calc(100% - 22px); /* Adjusted width to be full length */
             padding: 12px;
+            margin-left: 32px;
             border-radius: 5px;
             border: 1px solid #ccc;
             font-size: 1em;
         }
-        .container label {
+        .container button {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 1.1em;
-            display: block;
-            text-align: left;
-            margin-bottom: 8px;
-            color: #333;
+            transition: background 0.3s ease;
+            margin-top: 20px;
         }
-.container button {
-    background: #28a745;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background 0.3s ease;
-    margin-top: 20px; /* Add spacing above the button */
-}
         .container button:hover {
             background: #218838;
         }
@@ -75,160 +68,32 @@
             font-size: 1.2em;
             margin-top: 20px;
         }
-        .top-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 2;
-        }
-        .top-buttons a {
-            background: #218838;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 36px;
-            margin-left: 10px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-        .top-buttons a:hover {
-            background: #1e7e34;
-        }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
-            pointer-events: none;
-        }
-        .overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .drawer {
-            position: fixed;
-            top: 0;
-            right: 0;
-            height: 100%;
-            width: 325px;
-            background: white;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            padding: 20px;
-            border-radius: 24px 0 0 24px;
-            z-index: 2;
-        }
-        .drawer.open {
-            transform: translateX(0);
-        }
-        .drawer .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #333;
-        }
-        .drawer h2 {
-            margin-top: 0;
-        }
-        .drawer form {
-            display: flex;
-            flex-direction: column;
-        }
-        .drawer label {
-            font-size: 1em;
-            margin-bottom: 5px;
-            color: #333;
-        }
-        .drawer input {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .drawer button {
-            background: #28a745;
-            color: white;
-            padding: 0 20px;
-            height: 50px;
-            border: none;
-            border-radius: 36px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.3s ease;
+        .checkbox-container {
             display: flex;
             align-items: center;
-            justify-content: center;
+            background: #F7F9FB;
+            border-radius: 10px;
+            padding: 12px 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .drawer button:hover {
-            background: #218838;
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
         }
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .checkbox-container label {
+            color: #5E5E5E;
+            font-size: 1.1em;
+            cursor: pointer;
+            line-height: 1em;
+            padding-bottom: 0;
         }
-        .toast {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-size: 1em;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            animation: fadeOut 4s forwards;
+        .container input[type="text2"]:disabled {
+            background-color: #e0e0e0;
+            color: #a0a0a0;
+            cursor: not-allowed;
         }
-        .toast.error {
-            background-color: #dc3545;
-        }
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-.checkbox-container {
-    display: flex;
-    align-items: center; /* Centers content vertically */
-    background: #F7F9FB; /* Background color similar to the image */
-    border-radius: 10px;
-    padding: 12px 12px; /* Adjust padding as needed */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.checkbox-container input[type="checkbox"] {
-    margin-right: 10px; /* Space between checkbox and label */
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-.container input[type="text2"]:disabled {
-    background-color: #e0e0e0; /* Light grey background */
-    color: #a0a0a0; /* Darker grey text */
-    cursor: not-allowed; /* Show a not-allowed cursor */
-}
-
-
-.checkbox-container label {
-    color: #5E5E5E; /* Text color similar to the image */
-    font-size: 1.1em;
-    cursor: pointer;
-    line-height: 1em;
-    padding-bottom: 0;
-}
     </style>
 </head>
 <body>
@@ -239,9 +104,9 @@
     <form id="shorten-url-form">
         <label for="longUrl">Enter your URL:</label>
         <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
-        <div class="checkbox-container">
+        <div id="custom-url-section" class="checkbox-container" style="display: none;">
             <input type="checkbox" id="enableUrlInput" onclick="toggleUrlInput()">
-            <input type="text2" id="customUrl" name="customUrl" placeholder="Enter your Custom URL" required disabled>
+            <input type="text2" id="customUrl" name="customUrl" placeholder="Enter your Custom URL" disabled>
         </div>
         <button type="submit" onclick="submitShortenUrlForm(event)">Shorten URL</button>
     </form>
@@ -249,31 +114,39 @@
 </div>
 
 <script>
-function toggleUrlInput() {
-    const checkbox = document.getElementById('enableUrlInput');
-    const customUrlInput = document.getElementById('customUrl');
-
-    if (checkbox.checked) {
-        customUrlInput.disabled = false; // Enable the input
-        customUrlInput.style.backgroundColor = 'white'; // Restore original background color
-        customUrlInput.style.color = 'black'; // Restore original text color
-        customUrlInput.style.cursor = 'text'; // Show a text cursor
-    } else {
-        customUrlInput.disabled = true; // Disable the input
-        customUrlInput.style.backgroundColor = '#e0e0e0'; // Grey background
-        customUrlInput.style.color = '#a0a0a0'; // Grey text
-        customUrlInput.style.cursor = 'not-allowed'; // Show a not-allowed cursor
+    // Check session storage to hide or show custom URL fields
+    window.onload = function() {
+        const ispaid = sessionStorage.getItem('ispaid');
+        console.log("ispaid value:", ispaid);
+        if (ispaid === 'true') {
+            document.getElementById('custom-url-section').style.display = 'flex';
+        }
     }
-}
+
+    function toggleUrlInput() {
+        const checkbox = document.getElementById('enableUrlInput');
+        const customUrlInput = document.getElementById('customUrl');
+
+        if (checkbox.checked) {
+            customUrlInput.disabled = false;
+            customUrlInput.style.backgroundColor = 'white';
+            customUrlInput.style.color = 'black';
+            customUrlInput.style.cursor = 'text';
+        } else {
+            customUrlInput.disabled = true;
+            customUrlInput.style.backgroundColor = '#e0e0e0';
+            customUrlInput.style.color = '#a0a0a0';
+            customUrlInput.style.cursor = 'not-allowed';
+        }
+    }
 
     function submitShortenUrlForm(event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault();
 
         const longUrl = document.getElementById('longUrl').value;
         const customUrlInput = document.getElementById('customUrl').value;
         const enableCustomUrl = document.getElementById('enableUrlInput').checked;
 
-        // Retrieve email and password from localStorage
         const email = localStorage.getItem('email');
         const password = localStorage.getItem('password');
 
@@ -283,15 +156,12 @@ function toggleUrlInput() {
             return;
         }
 
-        // Encode the credentials for Authorization header
         const credentials = btoa(`${email}:${password}`);
-        console.log('Encoded credentials for Authorization header:', credentials);
 
         const requestBody = {
             longUrl: longUrl,
             customUrl: enableCustomUrl && customUrlInput.trim() ? customUrlInput : null
-    };
-
+        };
 
         fetch('/shorten', {
             method: 'POST',
@@ -305,10 +175,10 @@ function toggleUrlInput() {
             if (!response.ok) {
                 throw new Error('Failed to shorten URL');
             }
-            return response.json(); // Return the JSON from the response
+            return response.json();
         })
         .then(data => {
-            const shortenedUrl = data.shortenedUrl; // Access the shortened URL from the JSON
+            const shortenedUrl = data.shortenedUrl;
             document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + shortenedUrl;
             document.getElementById('shortened-url-message').className = 'success-message';
         })
@@ -317,17 +187,6 @@ function toggleUrlInput() {
             document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
             document.getElementById('shortened-url-message').className = 'message error';
         });
-    }
-
-    // Check session storage to keep the user logged in
-    window.onload = function() {
-        const loggedInUser = JSON.parse(sessionStorage.getItem('user'));
-        if (loggedInUser) {
-            document.getElementById('user-name').innerText = `Welcome, ${loggedInUser.name}`;
-            document.getElementById('user-name').style.display = 'inline';
-            document.getElementById('login-btn').style.display = 'none';
-            document.getElementById('signup-btn').style.display = 'none';
-        }
     }
 </script>
 </body>
