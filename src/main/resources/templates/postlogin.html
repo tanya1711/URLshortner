@@ -303,19 +303,26 @@ function toggleUrlInput() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to shorten URL');
-            }
-            return response.json(); // Return the JSON from the response
-        })
+                 throw new Error('Failed to shorten URL');
+         }
+    return response.json(); // Return the JSON from the response if OK
+    })
+
         .then(data => {
             const shortenedUrl = data.shortenedUrl; // Access the shortened URL from the JSON
             document.getElementById('shortened-url-message').innerText = 'Shortened URL: ' + shortenedUrl;
             document.getElementById('shortened-url-message').className = 'success-message';
         })
         .catch(error => {
-            console.error('Error:', error);
+             if (response.status === 403) {
+             console.error('Error:', error);
+            document.getElementById('shortened-url-message').innerText = 'OOPs, you reached your free trial limit!';
+            document.getElementById('shortened-url-message').className = 'message error';
+            }
+            else{
             document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
             document.getElementById('shortened-url-message').className = 'message error';
+            }
         });
     }
 
