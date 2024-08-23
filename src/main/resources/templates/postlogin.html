@@ -14,14 +14,14 @@
             overflow: hidden;
             position: relative;
             background-color: black; /* Set background to black */
-            display: flex;
             justify-content: center;
             align-items: center;
+            display: flex;
         }
         .container {
-            max-width: 800px; /* Increased max-width */
+            width: 600px; /* Increased max-width */
             background: white;
-            padding: 40px; /* Increased padding */
+            padding: 30px; /* Increased padding */
             border-radius: 10px;
             color: black;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -42,6 +42,13 @@
             border: 1px solid #ccc;
             font-size: 1em;
         }
+        .container input[type="text2"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
         .container label {
             font-size: 1.1em;
             display: block;
@@ -49,16 +56,17 @@
             margin-bottom: 8px;
             color: #333;
         }
-        .container button {
-            background: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            transition: background 0.3s ease;
-        }
+.container button {
+    background: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background 0.3s ease;
+    margin-top: 20px; /* Add spacing above the button */
+}
         .container button:hover {
             background: #218838;
         }
@@ -192,13 +200,38 @@
             80% { opacity: 1; }
             100% { opacity: 0; }
         }
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Centers content vertically */
+    background: #F7F9FB; /* Background color similar to the image */
+    border-radius: 10px;
+    padding: 12px 12px; /* Adjust padding as needed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 10px; /* Space between checkbox and label */
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.container input[type="text2"]:disabled {
+    background-color: #e0e0e0; /* Light grey background */
+    color: #a0a0a0; /* Darker grey text */
+    cursor: not-allowed; /* Show a not-allowed cursor */
+}
+
+
+.checkbox-container label {
+    color: #5E5E5E; /* Text color similar to the image */
+    font-size: 1.1em;
+    cursor: pointer;
+    line-height: 1em;
+    padding-bottom: 0;
+}
     </style>
 </head>
 <body>
-<!--<div class="top-buttons">-->
-<!--<a href="login.html" class="btn-login">Login</a>-->
-<!--<a href="signUp.html" class="btn-signup">Sign Up</a>-->
-<!--</div>-->
 
 <div class="container">
     <h1>BIGSHYFT</h1>
@@ -206,16 +239,39 @@
     <form id="shorten-url-form">
         <label for="longUrl">Enter your URL:</label>
         <input type="text" id="longUrl" name="longUrl" placeholder="https://example.com" required>
+        <div class="checkbox-container">
+            <input type="checkbox" id="enableUrlInput" onclick="toggleUrlInput()">
+            <input type="text2" id="customUrl" name="customUrl" placeholder="Enter your Custom URL" required disabled>
+        </div>
         <button type="submit" onclick="submitShortenUrlForm(event)">Shorten URL</button>
     </form>
     <div class="success-message" id="shortened-url-message"></div>
 </div>
 
 <script>
+function toggleUrlInput() {
+    const checkbox = document.getElementById('enableUrlInput');
+    const customUrlInput = document.getElementById('customUrl');
+
+    if (checkbox.checked) {
+        customUrlInput.disabled = false; // Enable the input
+        customUrlInput.style.backgroundColor = 'white'; // Restore original background color
+        customUrlInput.style.color = 'black'; // Restore original text color
+        customUrlInput.style.cursor = 'text'; // Show a text cursor
+    } else {
+        customUrlInput.disabled = true; // Disable the input
+        customUrlInput.style.backgroundColor = '#e0e0e0'; // Grey background
+        customUrlInput.style.color = '#a0a0a0'; // Grey text
+        customUrlInput.style.cursor = 'not-allowed'; // Show a not-allowed cursor
+    }
+}
+
     function submitShortenUrlForm(event) {
         event.preventDefault(); // Prevent the default form submission
 
         const longUrl = document.getElementById('longUrl').value;
+        const customUrlInput = document.getElementById('customUrl').value;
+        const enableCustomUrl = document.getElementById('enableUrlInput').checked;
 
         // Retrieve email and password from localStorage
         const email = localStorage.getItem('email');
@@ -231,13 +287,19 @@
         const credentials = btoa(`${email}:${password}`);
         console.log('Encoded credentials for Authorization header:', credentials);
 
+        const requestBody = {
+            longUrl: longUrl,
+            customUrl: enableCustomUrl && customUrlInput.trim() ? customUrlInput : null
+    };
+
+
         fetch('/shorten', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Basic ${credentials}`
             },
-            body: JSON.stringify({ longUrl: longUrl })
+            body: JSON.stringify(requestBody)
         })
         .then(response => {
             if (!response.ok) {
