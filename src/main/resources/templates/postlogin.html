@@ -303,6 +303,10 @@ function toggleUrlInput() {
         })
         .then(response => {
             if (!response.ok) {
+             if (response.status === 403) {
+            document.getElementById('shortened-url-message').innerText = 'OOPs, you reached your free trial limit!';
+            document.getElementById('shortened-url-message').className = 'message error';
+             }
                  throw new Error('Failed to shorten URL');
          }
     return response.json(); // Return the JSON from the response if OK
@@ -315,11 +319,11 @@ function toggleUrlInput() {
         })
         .catch(error => {
              if (response.status === 403) {
-             console.error('Error:', error);
             document.getElementById('shortened-url-message').innerText = 'OOPs, you reached your free trial limit!';
             document.getElementById('shortened-url-message').className = 'message error';
             }
             else{
+            console.error('Error:', error);
             document.getElementById('shortened-url-message').innerText = 'Error shortening URL.';
             document.getElementById('shortened-url-message').className = 'message error';
             }
