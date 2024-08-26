@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println(authentication);
                 if (request.getRequestURI().equals("/shorten")) {
 
-                    if (userService.getCountByUsername(username) < 10) {
+                    if (userService.getCountByUsername(username) < 1) {
                         userService.incrementCount(username);
 //                        response.setStatus(HttpServletResponse.SC_OK);
 //                        System.out.println(response.getStatus()+" set through filter" );
@@ -76,8 +76,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     } else {
                         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//                        response.getWriter().write("OOPs, you reached your free trial limit!");
-                        System.out.println("OOPs you reached your free trial limit!");
+                        response.getWriter().write("OOPs, you reached your free trial limit!");
+                        response.getWriter().flush();
+                        response.getWriter().close();
                         return;
                     }
                 }
